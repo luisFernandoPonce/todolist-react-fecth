@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 
 //include images into your bundle
 import List from "./list.jsx";
 
 //create your first component
 const Home = () => {
-	const [items, setItems] = useState([
-		"Lavar la ropa",
-		"Fregar los platos",
-		"Dar clases",
-	]);
+	const listRef = useRef();
+
 	function addItem(event) {
 		// Previene el comportamiento por defecto, evitando que la pagina se recargue
 		event.preventDefault();
@@ -18,36 +15,42 @@ const Home = () => {
 		// Se obtiene el nuevo item del formulario
 		let newItem = data.get("newItem");
 		// Se establece el estado del items al mismo arreglo con el nuevo elemento al final
-		setItems([...items, newItem]);
+		listRef.current.newItem(newItem);
 		// Reinicia el formulario
 		event.target.reset();
 	}
 	return (
 		<div>
-			<h1 className="text-center mt-5">ToDo list</h1>
-			<form onSubmit={addItem}>
-				<div className="form-group">
-					<label htmlFor="newItem">Nueva tarea</label>
-					<input
-						required
-						id="newItem"
-						type="text"
-						className="form-control"
-						placeholder="Ingrese una nueva tarea"
-						name="newItem"></input>
-				</div>
-				{/* <button className="btn btn-primary" type="submit">
+			<div className="card text-white bg-info mb-3">
+				<div className="card-header">Todo List</div>
+				<div className="card-body">
+					<h5 className="card-title">
+						<form onSubmit={addItem}>
+							<div className="form-group">
+								<label htmlFor="newItem">Nueva tarea</label>
+								<input
+									required
+									id="newItem"
+									type="text"
+									className="form-control"
+									placeholder="Ingrese una nueva tarea"
+									name="newItem"></input>
+							</div>
+							{/* <button className="btn btn-primary" type="submit">
 					Agregar ToDo
 				</button> */}
-			</form>
-			<div>
-				<List items={items} />
+						</form>
+					</h5>
+					<div className="card-text">
+						<List ref={listRef} />
+					</div>
+				</div>
+				<div className="card-footer text-muted">
+					Made by{" "}
+					<a href="http://www.4geeksacademy.com">4Geeks Academy</a>,
+					with love!
+				</div>
 			</div>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
 		</div>
 	);
 };

@@ -1,4 +1,12 @@
+.card{
+    max-width: 500px;
+    margin:auto;
+    margin-top: 20px;
+}
 
+.list-group-item-action{
+    cursor: pointer;
+}
 /* 
 
     You can write your own styles here...
